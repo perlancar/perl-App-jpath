@@ -1,0 +1,148 @@
+#!/usr/bin/perl
+
+use 5.010001;
+use strict;
+use warnings;
+
+use Getopt::Long;
+use JSON::Path;
+
+# VERSION
+
+my %Opts = (
+    input  => 'json',
+    output => 'json',
+);
+my $Expr;
+my $Input;
+my @Output;
+
+sub parse_cmdline {
+    my $res = GetOptions(
+        'input|i=s'  => \$Opts{input},
+        'output|o=s' => \$Opts{output},
+        'help|h'     => sub {
+            print <<USAGE;
+Usage:
+  $0 [options] <expr>
+  $0 --help
+Examples:
+  jpath '\$.store.book[*]' < data.json
+Options:
+  --input=s, -i   Input format (json, yaml, perl; default is json).
+  --output=s, -o  Output format (default is json).
+Consult manpage/documentation for more details.
+USAGE
+            exit 0;
+        },
+    );
+    exit 99 if !$res;
+
+    if (!@ARGV) {
+        warn "Please specify JSONPath expression\n";
+        exit 99;
+    }
+    $Expr = shift @ARGV;
+}
+
+sub get_input {
+    local $/;
+    if ($Opts{input} eq 'json') {
+        require JSON;
+        $Input = JSON->new->allow_nonref->decode(~~<>);
+    } elsif ($Opts{input} eq 'yaml') {
+        require YAML::Syck;
+        $Input = YAML::Syck::Load(~~<>);
+    } elsif ($Opts{input} eq 'perl') {
+        $Input = eval(~~<>);
+    } else {
+        warn "Unknown input format, ".
+            "refer to documentation for available formats\n";
+        exit 99;
+    }
+}
+
+sub run {
+    require JSON::Path;
+    local $JSON::Path::Safe = 0;
+    @Output = JSON::Path->new($Expr)->values($Input);
+}
+
+sub show_output {
+    if ($Opts{output} eq 'json') {
+        require JSON;
+        print JSON->new->pretty->encode(\@Output);
+    } elsif ($Opts{output} eq 'yaml') {
+        require YAML::Syck;
+        print YAML::Syck::Dump(\@Output);
+    } elsif ($Opts{output} eq 'perl') {
+        require Data::Dump;
+        say Data::Dump::dump(\@Output);
+    } else {
+        warn "Unknown output format, ".
+            "refer to documentation for available formats\n";
+        exit 99;
+    }
+}
+
+# MAIN
+
+parse_cmdline();
+get_input();
+run();
+show_output();
+
+1;
+# ABSTRACT: Command-line tool for JSON::Path
+# PODNAME: jpath
+
+=head1 SYNOPSIS
+
+Usage:
+
+ % jpath [OPTIONS] <JSONPATH_EXPR> < data.json
+
+
+=head1 DESCRIPTION
+
+This script provides a simple command-line interface for L<JSON::Path>.
+
+This script sets C<$JSON::Path::Safe> to 0 so you can eval Perl expressions.
+
+
+=head1 OPTIONS
+
+=over
+
+=item * --input=STR, -i
+
+Pick input format. Available formats: json, yaml, perl. Default is json.
+
+=item * --output=STR, -o
+
+Pick output format. Available formats are the same as in --input. Default is
+json.
+
+=back
+
+
+=head1 EXIT CODES
+
+0 on success.
+
+99 on command-line options error.
+
+
+=head1 TODO
+
+
+=head1 SEE ALSO
+
+L<JSON::Path>.
+
+L<App::dpath> a similar command-line tool, for L<Data::DPath>.
+
+Someone should perhaps also write C<tpath> for L<TPath>
+(L<TPath::Forester::Ref>).
+
+=cut
