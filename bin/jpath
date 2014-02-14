@@ -21,11 +21,16 @@ sub parse_cmdline {
     my $res = GetOptions(
         'input|i=s'  => \$Opts{input},
         'output|o=s' => \$Opts{output},
+        'version|v'  => sub {
+            say "jpath version ", ($main::VERSION // '?');
+            exit 0;
+        },
         'help|h'     => sub {
             print <<USAGE;
 Usage:
-  $0 [options] <expr>
-  $0 --help
+  jpath [options] <expr> [input_file]
+  jpath --version
+  jpath --help
 Examples:
   jpath '\$.store.book[*]' < data.json
 Options:
