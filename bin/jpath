@@ -114,8 +114,8 @@ Usage:
 =head1 DESCRIPTION
 
 This script provides a simple, relatively straightforward command-line interface
-for L<JSON::Path>. It can accepts JSON input as well as several other formats;
-and similarly can output JSON or alternative formats.
+for L<JSON::Path>. It accepts JSON input as well as several other formats; and
+similarly can output JSON or alternative formats.
 
 This script sets C<$JSON::Path::Safe> to 0 so you can eval Perl expressions.
 
