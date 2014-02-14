@@ -159,9 +159,10 @@ Someone should perhaps also write C<tpath> for L<TPath>
 L<jsonpath>, L<jcut> (from L<App::PipeFilter>). A command-line tool that works
 on a per-record basis.
 
-L<App::jt>, a command-line tool that deals specifically with JSON and provides
-some simple filtering capability for simple structures (e.g. arrays, array of
-hashes).
+L<App::jt>, a command-line tool that deals specifically with JSON input and in
+addition to doing JSONPath also provides some extra tools like simple filtering
+capability for simple structures (e.g. arrays, array of hashes), convert to CSV,
+etc.
 
 L<App::SerializeUtils>, various command-line scripts to convert or check data
 structure in various formats.
