@@ -113,7 +113,9 @@ Usage:
 
 =head1 DESCRIPTION
 
-This script provides a simple command-line interface for L<JSON::Path>.
+This script provides a simple, relatively straightforward command-line interface
+for L<JSON::Path>. It can accepts JSON input as well as several other formats;
+and similarly can output JSON or alternative formats.
 
 This script sets C<$JSON::Path::Safe> to 0 so you can eval Perl expressions.
 
@@ -149,9 +151,19 @@ L<Data::Format::Pretty::Console>). Default is json.
 
 L<JSON::Path>.
 
-L<App::dpath> a similar command-line tool, for L<Data::DPath>.
+L<App::dpath>, a similar command-line tool, for L<Data::DPath>.
 
 Someone should perhaps also write C<tpath> for L<TPath>
 (L<TPath::Forester::Ref>).
+
+L<jsonpath>, L<jcut> (from L<App::PipeFilter>). A command-line tool that works
+on a per-record basis.
+
+L<App::jt>, a command-line tool that deals specifically with JSON and provides
+some simple filtering capability for simple structures (e.g. arrays, array of
+hashes).
+
+L<App::SerializeUtils>, various command-line scripts to convert or check data
+structure in various formats.
 
 =cut
