@@ -147,6 +147,18 @@ L<Data::Format::Pretty::Console>). Default is json.
 =head1 TODO
 
 
+=head1 FAQ
+
+=head2 How do I turn off colors and line numbers?
+
+Use C<COLOR=0> and C<LINUM=0>, respectively. For example:
+
+ % LINUM=0 jpath ...
+
+See L<Data::Format::Pretty::JSON> and other Data::Format::Pretty::* for more
+details.
+
+
 =head1 SEE ALSO
 
 L<JSON::Path>.
