@@ -75,14 +75,14 @@ sub run {
 
 sub show_output {
     if ($Opts{output} eq 'json') {
-        require JSON;
-        print JSON->new->pretty->encode(\@Output);
+        require Data::Format::Pretty::JSON;
+        print Data::Format::Pretty::JSON::format_pretty(\@Output);
     } elsif ($Opts{output} eq 'yaml') {
-        require YAML::Syck;
-        print YAML::Syck::Dump(\@Output);
+        require Data::Format::Pretty::YAML;
+        print Data::Format::Pretty::YAML::format_pretty(\@Output);
     } elsif ($Opts{output} eq 'perl') {
-        require Data::Dump;
-        say Data::Dump::dump(\@Output);
+        require Data::Format::Pretty::Perl;
+        print Data::Format::Pretty::Perl::format_pretty(\@Output);
     } elsif ($Opts{output} eq 'pretty') {
         require Data::Format::Pretty::Console;
         print Data::Format::Pretty::Console::format_pretty(\@Output);
