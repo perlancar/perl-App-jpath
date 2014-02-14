@@ -35,7 +35,7 @@ Examples:
   jpath '\$.store.book[*]' < data.json
 Options:
   --input=s, -i   Input format (json, yaml, perl; default is json).
-  --output=s, -o  Output format (default is json).
+  --output=s, -o  Output format (json, yaml, perl, pretty; default is json).
 Consult manpage/documentation for more details.
 USAGE
             exit 0;
@@ -83,6 +83,9 @@ sub show_output {
     } elsif ($Opts{output} eq 'perl') {
         require Data::Dump;
         say Data::Dump::dump(\@Output);
+    } elsif ($Opts{output} eq 'pretty') {
+        require Data::Format::Pretty::Console;
+        print Data::Format::Pretty::Console::format_pretty(\@Output);
     } else {
         warn "Unknown output format, ".
             "refer to documentation for available formats\n";
@@ -121,12 +124,13 @@ This script sets C<$JSON::Path::Safe> to 0 so you can eval Perl expressions.
 
 =item * --input=STR, -i
 
-Pick input format. Available formats: json, yaml, perl. Default is json.
+Pick input format. Available formats: json, yaml (using L<YAML::Syck>), perl.
+Default is json.
 
 =item * --output=STR, -o
 
-Pick output format. Available formats are the same as in --input. Default is
-json.
+Pick output format. Available formats: json, yaml, perl, and pretty (using
+L<Data::Format::Pretty::Console>). Default is json.
 
 =back
 
