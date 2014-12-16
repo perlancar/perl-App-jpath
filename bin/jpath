@@ -102,7 +102,7 @@ show_output();
 
 1;
 # ABSTRACT: Command-line tool for JSON::Path
-# PODNAME: jpath
+# PODNAME:
 
 =head1 SYNOPSIS
 
