@@ -144,9 +144,6 @@ L<Data::Format::Pretty::Console>). Default is json.
 99 on command-line options error.
 
 
-=head1 TODO
-
-
 =head1 FAQ
 
 =head2 How do I turn off colors and line numbers?
