@@ -1,5 +1,3 @@
-Revision history for App-jpath
-
 0.04    2016-03-11 (PERLANCAR)
 
 	- Replace JSON with JSON::MaybeXS.
