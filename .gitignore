@@ -2,3 +2,4 @@ App-jpath-*
 .build
 *~
 nytprof*
+.DS_Store
